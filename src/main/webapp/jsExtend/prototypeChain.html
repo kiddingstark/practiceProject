@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JavaScript原型链继承</title>
+</head>
+<body>
+<script src="js/jquery-1.8.3.js" type="text/javascript"></script>
+<script  type="text/javascript">
+/**
+ * 原型链继承
+ * 缺点：原型对象的所有属性被子类共享，若想单独拓展子类，需要children.prototype = new Parent()后children.prototype单独拓展 
+ */
+function Parent(){
+    this.elements=["ul","li","p"];
+}
+Parent.prototype.hello = "hello";
+Parent.prototype.sayHello = function(){
+  console.log(this.hello);
+}
+function Child(){}
+Child.prototype = new Parent();//children.prototype原型对象指向parent实例，即children继承了parent  
+Child.prototype.world = "world";//单独为children进行拓展
+Child.prototype.sayWorld = function(){//单独为children进行拓展
+	console.log(this.world);
+}
+ var c1 = new Child();
+ c1.hello = "c1.hello";
+ console.log("c1.sayHello():",c1.sayHello());
+ console.log("c1.elements:",c1.elements);
+ c1.elements.push("div");
+ var c2 = new Child();
+ c2.hello = "c2.hello";
+ console.log("c2.sayHello():",c2.sayHello());
+ console.log("c2.elements:",c2.elements);
+ var p1 = new Parent();
+ </script>
+</body>
+</html>

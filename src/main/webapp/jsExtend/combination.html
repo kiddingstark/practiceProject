@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JavaScript组合继承</title>
+</head>
+<body>
+<script src="js/jquery-1.8.3.js" type="text/javascript"></script>
+<script  type="text/javascript">
+/**
+ * 组合继承：结合原型链继承与构造函数继承，每个子类实例都有一份单独的属性以及方法
+ * 缺点：调用了两次构造函数
+ */
+ 
+function object(o) {
+	function F() {};
+	F.prototype = o;
+	return new F();
+}
+function inheritPrototype(childType, superType) {
+	var prototype = object(superType.prototype);   // 创建父类副本对象
+	prototype.constructor = childType;            // 弥补父类副本对象没有构造函数的问题
+	childType.prototype = prototype;             // 指定对象
+}
+function Parent(){
+    this.elements=["ul","li","p"];
+}
+Parent.prototype.hello = "hello";
+Parent.prototype.sayHello = function(){
+  console.log(this.hello);
+}
+function Child(){
+	Parent.call(this);
+}
+Child.prototype = new Parent();//第一次调用Parent()，Child.prototype中存在element
+/**
+ * 使用寄生组合方式：Child.prototype = ? 使得Child.prototype不存在element
+					Chilid.prototype = inheritPrototype(Chilid,Parent);
+ */
+Child.prototype.world = "world";
+Child.prototype.sayWorld = function(){
+	console.log(this.world);
+}
+ var c1 = new Child();//第二次调用Parent(),children实例的elemetn会覆盖掉children.prototype的element
+ c1.hello = "c1.hello";
+ console.log("c1.sayHello():",c1.sayHello());
+ c1.elements.push("div");
+ var c2 = new Child();
+ c2.hello = "c2.hello";
+ console.log("c2.sayHello():",c2.sayHello());
+ console.log("c1.elements:",c1.elements);
+ console.log("c2.elements:",c2.elements);
+ </script>
+</body>
+</html>

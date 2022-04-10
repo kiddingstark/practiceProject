@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JavaScript构造函数继承</title>
+</head>
+<body>
+<script src="js/jquery-1.8.3.js" type="text/javascript"></script>
+<script  type="text/javascript">
+/**
+ * 构造函数继承：在子类的构造函数中调用call()或apply()
+ * 缺点：只可使用构造函数进行继承，父类原型对象上单独拓展的属性不可见
+ */
+function SuperType() {
+  this.colors = ['red', 'green', 'blue']
+}
+SuperType.prototype.hello = "hello";
+function ChildType() {
+  SuperType.call(this);
+}
+var children = new ChildType();
+console.log("children.colors:",children.colors+"。children.hello:",children.hello);
+ </script>
+</body>
+</html>

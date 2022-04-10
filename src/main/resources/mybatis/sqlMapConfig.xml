@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+	<!-- 未和spring整合前，此配置文件需要配置数据源，mapper扫描器，整合后交给application-dao。xml配置 -->
+	<typeAliases>
+		<package name="com.ahong.PO" />
+	</typeAliases>
+
+	<plugins>
+		<!-- com.github.pagehelper为PageHelper类所在包名 -->
+		<plugin interceptor="com.github.pagehelper.PageHelper">
+			<property name="dialect" value="mysql" />
+			<property name="reasonable" value="true" />
+		</plugin>
+	</plugins>
+</configuration>
